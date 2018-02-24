@@ -28,7 +28,7 @@ public class Square implements Comparable{
             possibilities.clear();
             possibilities.add(value);
             numPossibilities=possibilities.size();
-            Grid.queuePush(this);
+            //Grid.queuePush(this);
         }
     }
 
@@ -47,7 +47,7 @@ public class Square implements Comparable{
         numPossibilities = possibilities.size();
         affectedSquares--;
         //only add if isn't already added
-        if(numPossibilities==1 && tempPossibility!=numPossibilities ) Grid.queuePush(this);
+        //if(numPossibilities==1 && tempPossibility!=numPossibilities ) Grid.queuePush(this);
     }
 
     //when a square loses its value via backtracking
@@ -102,19 +102,31 @@ public class Square implements Comparable{
     // Want the fewest possibilities, if tie want most affected
     @Override
     public int compareTo(Object o) {
-        if (this.bypass!=0 && ((Square)o).bypass==0) return -1;
-        else if (this.bypass==0 && ((Square)o).bypass!=0) return 1;
-        else //bypass =
+        //if already has a value, don't want to consider
+        if(this.value!=0 && ((Square)o).value==0) return 1;
+        else if(this.value==0 && ((Square)o).value!=0) return -1;
+        else //both have a value or both don't have a value
         {
-            if(this.numPossibilities<((Square) o).numPossibilities) return -1;
-            else if (this.numPossibilities>((Square) o).numPossibilities) return 1;
-            else //MRV =
+            if (this.bypass != 0 && ((Square) o).bypass == 0) return -1;
+            else if (this.bypass == 0 && ((Square) o).bypass != 0) return 1;
+            else //bypass =
             {
-                if(this.affectedSquares<((Square) o).affectedSquares) return 1;
-                else if (this.affectedSquares>((Square) o).affectedSquares) return -1;
+                if (this.numPossibilities < ((Square) o).numPossibilities) return -1;
+                else if (this.numPossibilities > ((Square) o).numPossibilities) return 1;
+                else //MRV =
+                {
+                    if (this.affectedSquares < ((Square) o).affectedSquares) return 1;
+                    else if (this.affectedSquares > ((Square) o).affectedSquares) return -1;
+                }
             }
         }
         //all heuristics =
         return 0;
+    }
+    @Override
+    public String toString()
+    {
+        return ("(" + row + "," + col + "): Num Choices = " + numPossibilities + " Num Affect = " + affectedSquares
+        + " Bypass = " + bypass);
     }
 }

@@ -31,6 +31,20 @@ public class SolveSudoku {
         Grid.printMRV();
         //Grid.printDegree();
         //Grid.printArrayConfiguration();
+        Square min = Grid.getMin();
+        System.out.println(min.toString());
+
+        while(min.getNumPossibilities()==1)
+        {
+            min.assign();
+            Grid.addUpdate(min,true);
+            Grid.printPuzzle();
+            Grid.printMRV();
+            min = Grid.getMin();
+            System.out.println(min.toString());
+        }
+        Grid.printPuzzle();
+        /*
         while(!Grid.getQueue().isEmpty())
         {
             Square pop = Grid.getQueue().poll();
@@ -42,6 +56,7 @@ public class SolveSudoku {
             Grid.printMRV();
         }
         Grid.printPuzzle();
+        */
 
     }
 }

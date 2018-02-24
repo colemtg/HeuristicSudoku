@@ -124,9 +124,7 @@ public class Grid {
         updateArray();
         for(int i=0; i<arrayRepresentation.length; i++)
         {
-            System.out.println("(" + arrayRepresentation[i].getRow() + "," + arrayRepresentation[i].getCol() + "): "
-                    + "Num Choices = " + arrayRepresentation[i].getNumPossibilities() + ", Num Affect = " +
-                    arrayRepresentation[i].getAffectedSquares());
+            System.out.println(arrayRepresentation[i].toString());
         }
     }
 
@@ -137,7 +135,6 @@ public class Grid {
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
             arrayRepresentation[index] = (Square)pair.getValue();
-            it.remove(); // avoids a ConcurrentModificationException
             index++;
         }
         Arrays.sort(arrayRepresentation);
@@ -152,6 +149,21 @@ public class Grid {
     {
         updateArray();
         return arrayRepresentation;
+    }
+
+    public static Square getMin()
+    {
+        Iterator it = squareLookup.entrySet().iterator();
+        Map.Entry pair = (Map.Entry)it.next();
+        Square min = (Square)pair.getValue();
+        while (it.hasNext()) {
+            pair = (Map.Entry)it.next();
+            if (min.compareTo(pair.getValue()) >= 1)
+            {
+                min = (Square)pair.getValue();
+            }
+        }
+        return min;
     }
 
     public static HashMap<String, Square> getSquareLookup() {
