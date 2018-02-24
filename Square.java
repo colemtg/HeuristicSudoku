@@ -11,6 +11,7 @@ public class Square implements Comparable{
     private int affectedSquares=24; //Degree: starts at 24 (8*3)
     private final int row; //1-9
     private final int col; //1-9
+    private int bypass=0; //change this if want to set sqare without changing possibilities
 
     public Square(int row, int col, int value)
     {
@@ -34,6 +35,7 @@ public class Square implements Comparable{
     public void assign()
     {
         if(possibilities.isEmpty()) System.out.print("Error in logic/backtracking needed");
+        else if(bypass!=0) value=bypass;
         else value=possibilities.get(0); //assign to first element
     }
 
@@ -100,13 +102,19 @@ public class Square implements Comparable{
     // Want the fewest possibilities, if tie want most affected
     @Override
     public int compareTo(Object o) {
-        if(this.numPossibilities<((Square) o).numPossibilities) return -1;
-        else if (this.numPossibilities>((Square) o).numPossibilities) return 1;
-        else
+        if (this.bypass!=0 && ((Square)o).bypass==0) return -1;
+        else if (this.bypass==0 && ((Square)o).bypass!=0) return 1;
+        else //bypass =
         {
-            if(this.affectedSquares<((Square) o).affectedSquares) return 1;
-            else if (this.affectedSquares>((Square) o).affectedSquares) return -1;
+            if(this.numPossibilities<((Square) o).numPossibilities) return -1;
+            else if (this.numPossibilities>((Square) o).numPossibilities) return 1;
+            else //MRV =
+            {
+                if(this.affectedSquares<((Square) o).affectedSquares) return 1;
+                else if (this.affectedSquares>((Square) o).affectedSquares) return -1;
+            }
         }
+        //all heuristics =
         return 0;
     }
 }
