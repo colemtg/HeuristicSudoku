@@ -17,11 +17,7 @@ public class Grid {
     //Returns value at a given location, -1 if location out of bounds
     public static int getValueAt(int row, int col)
     {
-        if(squareLookup.containsKey(Integer.toString(row)+Integer.toString(col)))
-        {
-            return squareLookup.get(Integer.toString(row)+Integer.toString(col)).getValue();
-        }
-        return -1;
+        return getSquareAt(row,col).getValue();
     }
 
     public static void initialUpdate()
@@ -30,8 +26,8 @@ public class Grid {
         {
             for (int col=1; col<=9; col++)
             {
-                if(squareLookup.get(Integer.toString(row) + Integer.toString(col)).getGiven()) {
-                    addUpdate(squareLookup.get(Integer.toString(row) + Integer.toString(col)), true);
+                if(getSquareAt(row,col).getGiven()) {
+                    addUpdate(getSquareAt(row,col), true);
                 }
             }
         }
@@ -63,8 +59,8 @@ public class Grid {
         for (int i = rowStart; i < rowStart + 3; i++) {
             for (int j = colStart; j < colStart + 3; j++) {
                 if (add) {
-                    squareLookup.get(Integer.toString(i) + Integer.toString(j)).removePossibility(value);
-                } else squareLookup.get(Integer.toString(i) + Integer.toString(j)).addPossibility(value);
+                    getSquareAt(row,col).removePossibility(value);
+                } else getSquareAt(row,col).addPossibility(value);
             }
         }
     }
@@ -75,8 +71,8 @@ public class Grid {
     private static void updateCol(int col, int value, boolean add) {
         for (int row = 1; row <= 9; row++) {
             if (add) {
-                squareLookup.get(Integer.toString(row) + Integer.toString(col)).removePossibility(value);
-            } else squareLookup.get(Integer.toString(row) + Integer.toString(col)).addPossibility(value);
+                getSquareAt(row,col).removePossibility(value);
+            } else getSquareAt(row,col).addPossibility(value);
         }
     }
 
@@ -86,8 +82,8 @@ public class Grid {
     private static void updateRow(int row, int value, boolean add) {
         for (int col = 1; col <= 9; col++) {
             if (add) {
-                squareLookup.get(Integer.toString(row) + Integer.toString(col)).removePossibility(value);
-            } else squareLookup.get(Integer.toString(row) + Integer.toString(col)).addPossibility(value);
+                getSquareAt(row,col).removePossibility(value);
+            } else getSquareAt(row,col).addPossibility(value);
         }
     }
 
@@ -97,7 +93,7 @@ public class Grid {
         {
             for (int col=1; col<=9; col++)
             {
-                System.out.print(squareLookup.get(Integer.toString(row) + Integer.toString(col)).getValue());
+                System.out.print(getSquareAt(row,col).getValue());
                 System.out.print(" ");
             }
             System.out.println();
@@ -110,7 +106,7 @@ public class Grid {
         {
             for (int col=1; col<=9; col++)
             {
-                System.out.print(squareLookup.get(Integer.toString(row) + Integer.toString(col)).getNumPossibilities());
+                System.out.print(getSquareAt(row,col).getNumPossibilities());
                 System.out.print(" ");
             }
             System.out.println();
@@ -124,7 +120,7 @@ public class Grid {
         {
             for (int col=1; col<=9; col++)
             {
-                System.out.print(squareLookup.get(Integer.toString(row) + Integer.toString(col)).getAffectedSquares());
+                System.out.print(getSquareAt(row,col).getAffectedSquares());
                 System.out.print(" ");
             }
             System.out.println();
@@ -155,6 +151,12 @@ public class Grid {
         }
         Arrays.sort(arrayRepresentation);
     }
+
+    public static Square getSquareAt(int row, int col)
+    {
+        return squareLookup.get(Integer.toString(row) + Integer.toString(col));
+    }
+
     public static Square[] getArrayRepresentation()
     {
         updateArray();
