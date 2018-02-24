@@ -13,7 +13,7 @@ public class SolveSudoku {
 
         //URL path = Driver.class.getResource("Puzzles\\Easy1.txt"); //Change to new
         //FileReader file =  new FileReader(path.getFile());
-        FileReader file =  new FileReader("C:\\Users\\colemtg\\IdeaProjects\\HeuristicSudoku\\src\\Puzzles\\Fiendish1.txt");
+        FileReader file =  new FileReader("C:\\Users\\colemtg\\IdeaProjects\\HeuristicSudoku\\src\\Puzzles\\Easy1.txt");
         BufferedReader buffer = new BufferedReader(file);
         String tempLine;
 
@@ -28,11 +28,20 @@ public class SolveSudoku {
             row++;
         }
         Grid.printPuzzle();
-        Grid.initialUpdate();
         Grid.printMRV();
-        Grid.printDegree();
-
-        Grid.printArrayConfiguration();
+        //Grid.printDegree();
+        //Grid.printArrayConfiguration();
+        while(!Grid.getQueue().isEmpty())
+        {
+            Square pop = Grid.getQueue().poll();
+            System.out.println(pop.getRow() + "," + pop.getCol());
+            if (pop.getNumPossibilities()!=1) break;
+            pop.assign();
+            Grid.addUpdate(pop, true);
+            Grid.printPuzzle();
+            Grid.printMRV();
+        }
+        Grid.printPuzzle();
 
     }
 }

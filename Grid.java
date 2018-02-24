@@ -1,36 +1,27 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 //Sudoku is 9x9, size 81
 public class Grid {
     private static final int size=81;
     private static HashMap<String,Square> squareLookup = new HashMap<>(size, 1); //never expand, constant space
+    private static PriorityQueue<Square> queue = new PriorityQueue<>();
     private static Square[] arrayRepresentation = new Square[size];
 
     public static void addSquare(Square square)
     {
         squareLookup.put(Integer.toString(square.getRow())+Integer.toString(square.getCol()), square);
+        //queue.add(square);
+    }
+    public static void queuePush(Square square)
+    {
+        System.out.println("Adding " + square.getRow() + "," + square.getCol() + " to queue");
+        queue.add(square);
     }
 
     //Returns value at a given location, -1 if location out of bounds
     public static int getValueAt(int row, int col)
     {
         return getSquareAt(row,col).getValue();
-    }
-
-    public static void initialUpdate()
-    {
-        for(int row=1; row<=9; row++)
-        {
-            for (int col=1; col<=9; col++)
-            {
-                if(getSquareAt(row,col).getGiven()) {
-                    addUpdate(getSquareAt(row,col), true);
-                }
-            }
-        }
     }
 
     //call this with true when a square has been updated with a value
@@ -165,5 +156,9 @@ public class Grid {
 
     public static HashMap<String, Square> getSquareLookup() {
         return squareLookup;
+    }
+
+    public static PriorityQueue<Square> getQueue() {
+        return queue;
     }
 }

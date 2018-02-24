@@ -20,16 +20,32 @@ public class Square implements Comparable{
         }
         this.row=row;
         this.col=col;
-        this.value=value;
+        this.value=0;
         given = (value!=0);
+        if(given)
+        {
+            possibilities.clear();
+            possibilities.add(value);
+            numPossibilities=possibilities.size();
+            Grid.queuePush(this);
+        }
+    }
+
+    public void assign()
+    {
+        if(possibilities.isEmpty()) System.out.print("Error in logic/backtracking needed");
+        else value=possibilities.get(0); //assign to first element
     }
 
     //when a square is set to a value and affects this square
     public void removePossibility(int value)
     {
+        int tempPossibility = numPossibilities;
         possibilities.remove((Integer)value);
         numPossibilities = possibilities.size();
         affectedSquares--;
+        //only add if isn't already added
+        if(numPossibilities==1 && tempPossibility!=numPossibilities ) Grid.queuePush(this);
     }
 
     //when a square loses its value via backtracking
