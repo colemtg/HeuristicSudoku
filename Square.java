@@ -35,7 +35,7 @@ public class Square implements Comparable{
     public void assign()
     {
         if(possibilities.isEmpty()) System.out.print("Error in logic/backtracking needed");
-        else if(bypass!=0) value=bypass;
+        else if(bypass!=0) value=bypass; //assign to bypass if not 0
         else value=possibilities.get(0); //assign to first element
     }
 
@@ -87,6 +87,10 @@ public class Square implements Comparable{
         return col;
     }
 
+    public int getBypass() {
+        return bypass;
+    }
+
     @Override
     public int hashCode() {
         return (Integer.toString(row) + Integer.toString(col)).hashCode();
@@ -126,7 +130,7 @@ public class Square implements Comparable{
     @Override
     public String toString()
     {
-        return ("(" + row + "," + col + "): Num Choices = " + numPossibilities + " Num Affect = " + affectedSquares
-        + " Bypass = " + bypass);
+        return ("(" + row + "," + col + "): Num Choices = " + numPossibilities + ", Num Affect = " + affectedSquares
+        + ", Bypass = " + bypass);
     }
 }

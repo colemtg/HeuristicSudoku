@@ -34,7 +34,7 @@ public class SolveSudoku {
         Square min = Grid.getMin();
         System.out.println(min.toString());
 
-        while(min.getNumPossibilities()==1)
+        while(min.getNumPossibilities()==1 || min.getBypass()!=0)
         {
             min.assign();
             Grid.addUpdate(min,true);
