@@ -1,0 +1,1 @@
+while(confused) { Google(Brain.getConfusion()); } /*brian is stupid*/
